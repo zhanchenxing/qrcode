@@ -31,7 +31,8 @@ func handler(w http.ResponseWriter, r *http.Request){
     w.WriteHeader(http.StatusFound)
 }
 
-var templ = template.Must(template.New("qr").Parse(templateStr))
+// var templ = template.Must(template.New("qr").Parse(templateStr))
+var templ = template.Must(template.ParseFiles("templates/qr.html"))
 func QR(w http.ResponseWriter, req *http.Request){
     templ.Execute(w, req.FormValue("s"))
 }
