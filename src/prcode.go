@@ -34,7 +34,12 @@ func handler(w http.ResponseWriter, r *http.Request){
 // var templ = template.Must(template.New("qr").Parse(templateStr))
 var templ = template.Must(template.ParseFiles("templates/qr.html"))
 func QR(w http.ResponseWriter, req *http.Request){
-    templ.Execute(w, req.FormValue("s"))
+    text := req.FormValue("s")
+    if text == ""{
+        templ.Execute(w, "http://ezqrcode.appspot.com/")
+    } else {
+        templ.Execute(w, req.FormValue("s"))
+    }
 }
 
 var baseTempl = template.Must(template.ParseFiles("templates/base.html"))
