@@ -10,6 +10,7 @@ import (
 )
 
 func init() {
+    http.HandleFunc("/base.html", base)
     http.HandleFunc("/", QR)
 }
 
@@ -33,6 +34,14 @@ func handler(w http.ResponseWriter, r *http.Request){
 var templ = template.Must(template.New("qr").Parse(templateStr))
 func QR(w http.ResponseWriter, req *http.Request){
     templ.Execute(w, req.FormValue("s"))
+}
+
+var baseTempl = template.Must(template.ParseFiles("templates/base.html"))
+func base(w http.ResponseWriter, req *http.Request){
+    tc := make(map[string]string)
+    tc["title"] = "Base Html"
+    tc["content"] = "This is just a demo content."
+    baseTempl.Execute(w, tc)
 }
 
 const templateStr = `
